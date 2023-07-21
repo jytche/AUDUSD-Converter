@@ -14,7 +14,8 @@ df = pd.read_csv('AUDUSD-rates.csv')
 
 df = df.dropna()
 
-pd.set_option('display.precision', 5)
+df['Date'] = pd.to_datetime(df['Date'])
+df.sort_values('Date', inplace=True)
 
 # Define x and y axis
 y = df['Adj Close']
@@ -66,24 +67,26 @@ rf_model_train_r2 = r2_score(y_train, lr_model_train_pred)
 rf_model_test_mse = mean_squared_error(y_test, lr_model_test_pred)
 rf_model_test_r2 = r2_score(y_test, lr_model_test_pred)
 
-print('RF Model MSE (Train):', rf_model_train_mse)
-print('RF Model R2 (Train)', rf_model_train_r2)
-print('RF Model MSE (Test):', rf_model_test_mse)
-print('RF Model R2 (Test)', rf_model_test_r2)
+# print('RF Model MSE (Train):', rf_model_train_mse)
+# print('RF Model R2 (Train)', rf_model_train_r2)
+# print('RF Model MSE (Test):', rf_model_test_mse)
+# print('RF Model R2 (Test)', rf_model_test_r2)
 
 rf_model_results = pd.DataFrame(['Linear Regression', rf_model_train_mse, rf_model_train_r2, rf_model_test_mse, rf_model_test_r2]).transpose()
 rf_model_results.columns = ['Method', 'Training MSE', 'Training R2', 'Test MSE', 'Test R2']
 
-print(rf_model_results)
+# print(rf_model_results)
 
-# plt.scatter(x=y_train, y=lr_model_train_pred, alpha=0.3)
-# plt.xlabel('Actual Values')
-# plt.ylabel('Predicted Values')
-# plt.title('Actual vs. Predicted')
-# plt.show()
+plt.figure(figsize=(10,6))
+plt.plot(df['Date'], df['Adj Close'], label='Exchange Rate')
+plt.title('Historical Exchange Rates')
+plt.xlabel('Date')
+plt.ylabel('Adj Close')
+plt.legend()
+plt.savefig('C:\\Users\\jytch\\PycharmProjects\\AUDUSD-Converter\\static\\graph.png')
 
-print(f'The number of rows in the X training data is: {X_train.shape[0]}')
-print(f'The number of rows in the y training data is: {y_train.shape[0]}')
+# print(f'The number of rows in the X training data is: {X_train.shape[0]}')
+# print(f'The number of rows in the y training data is: {y_train.shape[0]}')
 
 # Use trained model to make a prediction
 next_instance = pd.DataFrame({'rba-cash-rate':  [4.10], 'fed-reserve-rate': [5.08]})

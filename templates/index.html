@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AUD/USD Currency Predictor</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Currency Predictor</h1>
+        <p>Here is the currency prediction graph:</p>
+        <img src="{{ url_for('static', filename='graph.png') }}" alt="Currency prediction graph">
+    </div>
+</body>
+</html>
